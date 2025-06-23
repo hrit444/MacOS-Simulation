@@ -1,0 +1,155 @@
+* {
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background-image: url("https://images.unsplash.com/photo-1687248408868-761bfe297b81?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  overflow: hidden;
+}
+
+nav {
+  i {
+    font-size: 19px;
+  }
+
+  h4 {
+    font-size: 13.5px;
+    font-weight: 500;
+  }
+
+  .r-nav {
+    i,
+    img {
+      margin-left: 2.5px;
+      margin-right: 2.5px;
+    }
+  }
+}
+
+#sunlogo {
+  position: absolute;
+  left: 0;
+  color: black;
+  font-size: 13px;
+}
+
+.control-center {
+  // display: grid;
+  display: none;
+  grid-template-areas:
+    "bc bc f f"
+    "bc bc sm smr"
+    "bb bb bb bb"
+    "sb sb sb sb";
+
+  .common-box {
+    border-radius: 8px;
+    background-color: #222429;
+    border: 0.5px solid #404246;
+    box-shadow: 1px 1px #000;
+  }
+
+  .basic-control {
+    grid-area: bc;
+    height: 170px;
+  }
+
+  .focus {
+    grid-area: f;
+    width: 160px;
+    height: 80px;
+  }
+  .stage-manager {
+    grid-area: sm;
+    height: 80px;
+  }
+  .screen-mirror {
+    grid-area: smr;
+    height: 80px;
+  }
+  .brightness-bar {
+    grid-area: bb;
+  }
+  .sound-bar {
+    grid-area: sb;
+  }
+
+  .round {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 10px;
+    background-color: #414249;
+    border-radius: 50%;
+
+    i {
+      font-size: 16px;
+      color: #fff;
+    }
+  }
+}
+
+.common-sec {
+  display: flex;
+  height: 28px;
+  padding-left: 4px;
+  align-items: center;
+  gap: 0.3vw;
+  border-radius: 4px;
+
+  i {
+    color: #008fff;
+    font-size: 1.2vw;
+  }
+
+  h4 {
+    font-size: 0.9vw;
+  }
+
+  img {
+    height: 18px;
+  }
+
+  #desk {
+    height: 16px;
+  }
+
+  &:hover {
+    background-color: #797979;
+  }
+}
+
+.finder-app {
+  .right {
+    .navigation {
+      i {
+        font-size: 1.3vw;
+        color: #a6a6a6;
+      }
+
+      #filename {
+        font-size: 1vw;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+.hov:hover {
+  transform: scale(1.2);
+  transition: all 0.6s ease;
+  position: relative;
+  bottom: 25%;
+}
