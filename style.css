@@ -119,8 +119,22 @@ nav .r-nav img {
 }
 
 .hov:hover {
-  transform: scale(1.2);
   transition: all 0.6s ease;
   position: relative;
   bottom: 25%;
+}
+
+.right-click-window h4 {
+  font-size: 0.9vw;
+  padding: 0.3vw 0.8vw;
+  border-radius: 3px;
+  cursor: default;
+}
+.right-click-window h4:hover {
+  background-color: #1d79e5;
+}
+
+.folder {
+  cursor: grab;
+  z-index: 50;
 }/*# sourceMappingURL=style.css.map */

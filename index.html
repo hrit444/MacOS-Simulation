@@ -48,7 +48,7 @@
 
     <!-- Display container -->
     <div
-      class="display-container opacity-95 hidden bg-[#2A2A2C] h-[195px] w-[300px] absolute top-6.5 right-20 rounded-md border border-[#5A5B5C] text-white py-2 px-4 flex flex-col justify-around"
+      class="display-container opacity-95 hidden bg-[#2A2A2C] h-[195px] w-[300px] absolute top-6.5 right-20 rounded-md border border-[#5A5B5C] text-white py-2 px-4 flex flex-col justify-around z-[999]"
     >
       <h3 class="text-[14px] font-semibold opacity-80">Display</h3>
       <div class="bar h-5.5 mt-2 w-full bg-[#46484B] rounded-full relative">
@@ -90,7 +90,7 @@
 
     <!-- Control center  -->
     <div
-      class="control-center opacity-93 bg-[#1D1F24] h-[370px] w-[335px] absolute top-6.5 right-1 rounded-xl p-3 flex text-white gap-3"
+      class="control-center opacity-93 bg-[#1D1F24] h-[370px] w-[335px] absolute top-6.5 right-1 rounded-xl p-3 flex text-white gap-3 z-[999]"
     >
       <div class="basic-control common-box flex flex-col items-start p-3 gap-4">
         <div class="wifi flex w-full gap-2">
@@ -178,10 +178,24 @@
         </div>
       </div>
     </div>
+
+    <!-- Right click window -->
+     <div class="right-click-window hidden border absolute z-50 border-[#666768] border-[.1px] flex-col bg-[#1D1F24] opacity-95 xl:h-[16.5vw] lg:h-[22vw] xl:w-[15vw] lg:w-[19vw] rounded-sm lg:p-1.5 xl:p-2.5 text-white text-sm justify-center gap-.5">
+      <h4 id="new-folder">New Folder</h4>
+      <div class="bg-[#666768] h-[.5px] w-full my-1.5"></div>
+      <h4>Get Info</h4>
+      <h4>Change Wallpaper...</h4>
+      <h4>Edit Widgets...</h4>
+      <div class="bg-[#666768] h-[.5px] w-full my-1.5"></div>
+      <h4>Use Stacks</h4>
+      <h4>Group Stacks By</h4>
+      <h4>Show View Options</h4>
+     </div>
+
     <!-- Finder Application -->
     <div
       id="finder-app"
-      class="h-2/3 w-1/2 bg-[#323332] text-white rounded-xl border border-[#515151] absolute top-[20%] left-[10%] overflow-hidden cursor-default hidden absolute"
+      class="h-2/3 w-1/2 bg-[#323332] text-white rounded-xl border border-[#515151] absolute top-[20%] left-[10%] overflow-hidden hidden cursor-default absolute"
     >
       <div class="left bg-[#46464A] h-full w-[23%] p-2">
         <nav class="navigation flex gap-2 h-10 pb-2 items-center pl-3">
@@ -189,7 +203,7 @@
           <div id="minimise" class="bg-[#FEBC2E] h-3 w-3 rounded-full"></div>
           <div id="resize" class="bg-[#28C840] h-3 w-3 rounded-full"></div>
         </nav>
-        <div class="dSec h-full w-full">
+        <div class="dSec h-full w-full overflow-y-scroll">
           <div class="favorites">
             <h5 class="text-xs text-[#737573] px-[5px]">Favorites</h5>
             <div class="recent common-sec">
@@ -233,7 +247,7 @@
         </div>
       </div>
       <div class="right h-full w-[77%] flex flex-col">
-        <nav class="flex h-10 w-full flex p-4 items-center justify-between">
+        <nav class="flex h-10 w-full bg-[#3B3B3B] flex p-4  py-5.5 items-center justify-between">
           <div class="navigation h-full flex items-center gap-2">
             <i class="ri-arrow-left-wide-fill"></i>
             <i class="ri-arrow-right-wide-fill opacity-90"></i>
@@ -254,89 +268,93 @@
               src="finder-nav-icon/others.png"
               alt=""
             />
-            <i class="ri-search-line text-[#8F908F] ml-6"></i>
+            <i class="ri-search-line search-icon text-[#8F908F] ml-6"></i>
+            <div class="sBorder hidden border flex gap-3 items-center ml-6 px-1.5 border-[#515151] rounded-sm">
+              <i class="ri-search-line text-[#8F908F] "></i>
+              <input class="search-list hidden outline-none placeholder:text-base font-light" type="text" placeholder="search">
+              </input>
+            </div>
+            
           </div>
         </nav>
         <div class="finder-display h-full w-full p-4"></div>
       </div>
     </div>
-    <!-- Main work area  -->
-    <div class="work-area w-full relative"></div>
 
     <!-- Dock area  -->
     <div
-      class="dock bg-[#1D1F24] h-16 w-1/2 rounded-xl bottom-1 left-1/2 -translate-x-1/2 opacity-90 border border-[#434446] absolute flex items-center px-2 justify-around"
+      class="dock bg-[#1D1F24] h-16 xl:w-1/2 lg:w-2/3 rounded-xl bottom-1 left-1/2 -translate-x-1/2 opacity-90 border border-[#434446] absolute flex items-center px-2 justify-around"
     >
       <img
         id="finder"
-        class="rounded-md h-11.5 hov"
+        class="rounded-md h-12.5 hov"
         src="./doc icon/finder.png"
         alt=""
       />
       <img
         id="code"
-        class="rounded-md h-11.5 hov"
+        class="rounded-md h-12.5 hov"
         src="./doc icon/vscode.png"
         alt=""
       />
 
       <img
         id="brave"
-        class="rounded-md h-11.5 hov"
+        class="rounded-md h-12.5 hov"
         src="./doc icon/brave.png"
         alt=""
       />
       <img
         id="notion"
-        class="rounded-md h-11.5 hov"
+        class="rounded-md h-12.5 hov"
         src="./doc icon/notion.png"
         alt=""
       />
       <img
         id="photoshop"
-        class="rounded-md h-11.5 hov"
+        class="rounded-md h-12.5 hov"
         src="./doc icon/photoshop.png"
         alt=""
       />
       <img
         id="illustrator"
-        class="rounded-md h-11.5 hov"
+        class="rounded-md h-12.5 hov"
         src="./doc icon/illustrator.png"
         alt=""
       />
       <img
         id="after-effects"
-        class="rounded-md h-11.5 hov"
+        class="rounded-md h-12.5 hov"
         src="./doc icon/after-effects.png"
         alt=""
       />
       <img
         id="premiere-pro"
-        class="rounded-md h-11.5 hov"
+        class="rounded-md h-12.5 hov"
         src="./doc icon/premiere-pro.png"
         alt=""
       />
       <img
         id="davinci"
-        class="rounded-md h-11.5 hov"
+        class="rounded-md h-12.5 hov"
         src="./doc icon/davinci.png"
         alt=""
       />
       <img
         id="terminal"
-        class="rounded-md h-11.5 hov"
+        class="rounded-md h-12.5 hov"
         src="./doc icon/terminal.png"
         alt=""
       />
       <img
         id="setting"
-        class="rounded-md h-11.5 hov"
+        class="rounded-md h-12.5 hov"
         src="./doc icon/setting.png"
         alt=""
       />
       <img
         id="trash"
-        class="rounded-md h-11.5 hov"
+        class="rounded-md h-12.5 hov"
         src="./doc icon/trash.png"
         alt=""
       />
