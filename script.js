@@ -234,12 +234,6 @@ function finderApplication() {
 
 finderApplication();
 
-function folderCreation() {
-  const name = "New folder";
-}
-
-folderCreation();
-
 function contextMenu() {
   let rClkWindow = document.querySelector(".right-click-window");
 
@@ -275,29 +269,30 @@ function contextMenu() {
 
 contextMenu();
 
-document
-  .querySelector("#new-folder")
-  .addEventListener("click", () => createNewFolder());
+function newFolder() {
+  document
+    .querySelector("#new-folder")
+    .addEventListener("click", () => createNewFolder());
 
-let folderCount = 1;
+  let folderCount = 1;
 
-document.addEventListener("keydown", (e) => {
-  if (e.shiftKey && e.key === "N") {
-    e.preventDefault();
-    createNewFolder();
-  }
-});
+  document.addEventListener("keydown", (e) => {
+    if (e.shiftKey && e.key === "N") {
+      e.preventDefault();
+      createNewFolder();
+    }
+  });
 
-function createNewFolder() {
-  const folder = document.createElement("div");
-  folder.className =
-    "folder absolute flex flex-col justify-center items-center h-20 w-16 cursor-grab";
-  folder.style.top = `${Math.random() * 70 + 10}vh`;
-  folder.style.left = `${Math.random() * 80 + 10}vw`;
+  function createNewFolder() {
+    const folder = document.createElement("div");
+    folder.className =
+      "folder absolute flex flex-col justify-center items-center h-20 w-16 cursor-grab";
+    folder.style.top = `${Math.random() * 70 + 10}vh`;
+    folder.style.left = `${Math.random() * 80 + 10}vw`;
 
-  const name = `Untitled folder ${folderCount++}`;
+    const name = `Untitled folder ${folderCount++}`;
 
-  folder.innerHTML = `
+    folder.innerHTML = `
     <img class="w-3/4 h-3/4" src="/folder.png" alt="">
     <input
       type="text"
@@ -307,56 +302,98 @@ function createNewFolder() {
     />
   `;
 
-  document.body.appendChild(folder);
+    document.body.appendChild(folder);
 
-  const input = folder.querySelector("input");
+    const input = folder.querySelector("input");
 
-  // Start readonly
-  input.setAttribute("readonly", true);
+    // Start readonly
+    input.setAttribute("readonly", true);
 
-  // Rename on double-click
-  input.addEventListener("dblclick", () => {
-    input.removeAttribute("readonly");
-    input.focus();
-    input.select();
-  });
+    // Rename on double-click
+    input.addEventListener("dblclick", () => {
+      input.removeAttribute("readonly");
+      input.focus();
+      input.select();
+    });
 
-  // Finalize rename on Enter
-  input.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      input.blur();
-      input.setAttribute("readonly", true);
-    }
-  });
+    // Finalize rename on Enter
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        input.blur();
+        input.setAttribute("readonly", true);
+      }
+    });
 
-  //Rename on enter
-  input.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      input.setAttribute("readonly", true);
-      input.blur();
-    }
-  });
+    //Rename on enter
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        input.setAttribute("readonly", true);
+        input.blur();
+      }
+    });
 
-  // Drag & drop functionality
-  folder.addEventListener("mousedown", (e) => {
-    if (e.target.tagName === "INPUT") return;
+    // Drag & drop functionality
+    folder.addEventListener("mousedown", (e) => {
+      if (e.target.tagName === "INPUT") return;
 
-    const shiftX = e.clientX - folder.getBoundingClientRect().left;
-    const shiftY = e.clientY - folder.getBoundingClientRect().top;
+      const shiftX = e.clientX - folder.getBoundingClientRect().left;
+      const shiftY = e.clientY - folder.getBoundingClientRect().top;
 
-    function onMouseMove(e) {
-      folder.style.left = `${e.clientX - shiftX}px`;
-      folder.style.top = `${e.clientY - shiftY}px`;
-    }
+      function onMouseMove(e) {
+        folder.style.left = `${e.clientX - shiftX}px`;
+        folder.style.top = `${e.clientY - shiftY}px`;
+      }
 
-    function onMouseUp() {
-      document.removeEventListener("mousemove", onMouseMove);
-      document.removeEventListener("mouseup", onMouseUp);
-    }
+      function onMouseUp() {
+        document.removeEventListener("mousemove", onMouseMove);
+        document.removeEventListener("mouseup", onMouseUp);
+      }
 
-    document.addEventListener("mousemove", onMouseMove);
-    document.addEventListener("mouseup", onMouseUp);
-  });
+      document.addEventListener("mousemove", onMouseMove);
+      document.addEventListener("mouseup", onMouseUp);
+    });
+  }
 }
 
+newFolder();
+
+function brightnessControllerFnc() {
+  const brightnessSlider = document.querySelector(
+    ".control-center .brightness input"
+  );
+  const brightnessProgressBar = document.querySelector(
+    ".control-center .brightness progress"
+  );
+  const displayBrightnessSlider = document.querySelector(
+    ".display-container .brightness input"
+  );
+  const displayBrightnessProgressBar = document.querySelector(
+    ".display-container .brightness progress"
+  );
+
+  function syncBrightness(value) {
+    // Sync all sliders
+    brightnessSlider.value = value;
+    displayBrightnessSlider.value = value;
+
+    // Sync all progress bars
+    brightnessProgressBar.value = value;
+    displayBrightnessProgressBar.value = value;
+
+    // Apply brightness
+    const controller = document.querySelector(".brightness-controller");
+    if (controller) {
+      controller.style.filter = `brightness(${value}%)`;
+    }
+  }
+
+  // Add event listeners
+  brightnessSlider.addEventListener("input", () => {
+    syncBrightness(brightnessSlider.value);
+  });
+
+  displayBrightnessSlider.addEventListener("input", () => {
+    syncBrightness(displayBrightnessSlider.value);
+  });
+}

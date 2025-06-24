@@ -12,7 +12,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   </head>
   <body>
-    <!-- Title bar -->
+    <div class="brightness-controller relative h-full w-full">
+      <!-- Title bar -->
     <nav
       class="title h-6 w-screen bg-gray-400 flex justify-between items-center px-4 cursor-default"
     >
@@ -50,11 +51,14 @@
     <div
       class="display-container opacity-95 hidden bg-[#2A2A2C] h-[195px] w-[300px] absolute top-6.5 right-20 rounded-md border border-[#5A5B5C] text-white py-2 px-4 flex flex-col justify-around z-[999]"
     >
-      <h3 class="text-[14px] font-semibold opacity-80">Display</h3>
-      <div class="bar h-5.5 mt-2 w-full bg-[#46484B] rounded-full relative">
-        <i id="sunlogo" class="ri-sun-fill"></i>
-        <div class="brightness h-full w-50 bg-white rounded-full"></div>
-      </div>
+      <h3 class="text-sm opacity-80 mb-3">Display</h3>
+        <div class="brightness-bar-cont flex bg-[#414346] rounded-full h-5.5 w-full">
+          <div class="brightness relative w-full h-full">
+            <input class="absolute top-0 left-0 w-full h-full bg-transparent z-[99]" type="range" min="10" max="100" value="100">
+            <progress class="absolute top-0 left-0 w-full h-full overflow-hidden rounded-full" min="10" max="100" value="100"></progress>
+            <i class="ri-sun-fill absolute top-0 left-1 text-sm text-black z-[150]"></i>
+          </div>
+        </div>
       <div class="modes flex items-center justify-between py-2.5">
         <div class="dark flex flex-col items-center mt-1.5">
           <div
@@ -90,7 +94,7 @@
 
     <!-- Control center  -->
     <div
-      class="control-center opacity-93 bg-[#1D1F24] h-[370px] w-[335px] absolute top-6.5 right-1 rounded-xl p-3 flex text-white gap-3 z-[999]"
+      class="control-center opacity-93 bg-[#1D1F24] h-[370px] w-[335px] absolute top-6.5 right-1 rounded-xl p-3 flex text-white gap-3"
     >
       <div class="basic-control common-box flex flex-col items-start p-3 gap-4">
         <div class="wifi flex w-full gap-2">
@@ -154,14 +158,17 @@
           Screen<br />Mirroring
         </h4>
       </div>
-      <div class="brightness-bar common-box flex flex-col px-3 py-2.5 pb-3">
+      <div class="brightness-bar common-box flex flex-col gap-3 px-3 py-2.5 pb-3">
         <h3 class="text-sm opacity-80">Display</h3>
-
-        <div class="bar h-5.5 mt-2 w-full bg-[#46484B] rounded-full relative">
-          <i id="sunlogo" class="ri-sun-fill ml-1 mt-[1px]"></i>
-          <div class="brightness h-full w-50 bg-white rounded-full"></div>
+        <div class="brightness-bar-cont flex bg-[#414346] rounded-full h-5.5 w-full">
+          <div class="brightness relative w-full h-full">
+            <input class="absolute top-0 left-0 w-full h-full bg-transparent z-[99]" type="range" min="10" max="100" value="100">
+            <progress class="absolute top-0 left-0 w-full h-full overflow-hidden rounded-full" min="10" max="100" value="100"></progress>
+            <i class="ri-sun-fill absolute top-0 left-1 text-sm text-black z-[150]"></i>
+          </div>
         </div>
       </div>
+
       <div class="sound-bar common-box flex flex-col px-3 py-2.5 pb-3">
         <h3 class="text-sm opacity-80">Sound</h3>
 
@@ -358,6 +365,7 @@
         src="./doc icon/trash.png"
         alt=""
       />
+    </div>
     </div>
     <script src="script.js"></script>
   </body>

@@ -9,13 +9,14 @@ body {
   width: 100%;
 }
 
-body {
+.brightness-controller {
   background-image: url("https://images.unsplash.com/photo-1687248408868-761bfe297b81?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
   position: relative;
   overflow: hidden;
+  transition: filter 0.2s ease;
 }
 
 nav i {
@@ -137,4 +138,26 @@ nav .r-nav img {
 .folder {
   cursor: grab;
   z-index: 50;
+}
+
+.brightness input {
+  -webkit-appearance: none;
+  background: transparent;
+}
+.brightness input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 20px;
+  width: 20px;
+  background-color: #fff;
+  border-radius: 50%;
+  border: 1px solid #b8b8b8;
+  cursor: pointer;
+}
+.brightness progress::-webkit-progress-bar {
+  background-color: #414346;
+}
+.brightness progress::-webkit-progress-value {
+  background-color: #fff;
+  border-radius: 10px;
+  height: 100%;
 }/*# sourceMappingURL=style.css.map */
