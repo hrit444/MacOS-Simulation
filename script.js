@@ -269,6 +269,9 @@ function contextMenu() {
 
 contextMenu();
 
+
+//new folder creation, rename, drag
+
 function newFolder() {
   document
     .querySelector("#new-folder")
@@ -358,7 +361,8 @@ function newFolder() {
 
 newFolder();
 
-function brightnessControllerFnc() {
+
+function brightnessSeeker() {
   const brightnessSlider = document.querySelector(
     ".control-center .brightness input"
   );
@@ -397,3 +401,19 @@ function brightnessControllerFnc() {
     syncBrightness(displayBrightnessSlider.value);
   });
 }
+
+brightnessSeeker()
+
+function soundSeeker() {
+  const soundSlider = document.querySelector(
+    ".control-center .sound input"
+  );
+  const soundProgressBar = document.querySelector(
+    ".control-center .sound progress"
+  );
+  soundSlider.addEventListener("input", () => {
+    soundProgressBar.value = soundSlider.value;
+  });
+}
+
+soundSeeker()

@@ -160,4 +160,26 @@ nav .r-nav img {
   background-color: #fff;
   border-radius: 10px;
   height: 100%;
+}
+
+.sound input {
+  -webkit-appearance: none;
+  background: transparent;
+}
+.sound input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 20px;
+  width: 20px;
+  background-color: #fff;
+  border-radius: 50%;
+  border: 1px solid #b8b8b8;
+  cursor: pointer;
+}
+.sound progress::-webkit-progress-bar {
+  background-color: #414346;
+}
+.sound progress::-webkit-progress-value {
+  background-color: #fff;
+  border-radius: 10px;
+  height: 100%;
 }/*# sourceMappingURL=style.css.map */

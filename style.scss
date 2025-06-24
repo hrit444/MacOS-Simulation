@@ -202,3 +202,32 @@ nav {
     }
   }
 }
+.sound{
+  input{
+    -webkit-appearance: none;
+    background: transparent;
+    
+    &::-webkit-slider-thumb{
+      -webkit-appearance: none;
+      height: 20px;
+      width: 20px;
+      background-color: #fff;
+      border-radius: 50%;
+      border: 1px solid #b8b8b8;
+      cursor: pointer;
+    }
+  }
+  
+  progress{
+    // -webkit-appearance: none;
+
+    &::-webkit-progress-bar{
+      background-color: #414346;
+    }
+    &::-webkit-progress-value{
+      background-color: #fff;
+      border-radius: 10px;
+      height: 100%;
+    }
+  }
+}

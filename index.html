@@ -173,10 +173,13 @@
         <h3 class="text-sm opacity-80">Sound</h3>
 
         <div class="flex items-center justify-center gap-2">
-          <div class="bar h-5.5 mt-2 w-full bg-[#46484B] rounded-full relative">
-            <i id="sunlogo" class="ri-headphone-fill ml-1 mt-[1px]"></i>
-            <div class="brightness h-full w-50 bg-white rounded-full"></div>
+          <div class="sound-bar-cont flex bg-[#414346] rounded-full h-5.5 w-full">
+          <div class="sound relative w-full h-full">
+            <input class="absolute top-0 left-0 w-full h-full bg-transparent z-[99]" type="range" min="10" max="100" value="70">
+            <progress class="absolute top-0 left-0 w-full h-full overflow-hidden rounded-full" min="10" max="100" value="70"></progress>
+            <i class="ri-headphone-fill absolute top-0 left-1 text-sm text-black z-[150]"></i>
           </div>
+        </div>
           <div
             class="bg-[#0B84FF] rounded-full mt-1.5 h-[30px] w-[33px] flex justify-center items-center"
           >
