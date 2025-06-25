@@ -181,7 +181,7 @@ function contextMenu() {
   // });
 }
 
-// contextMenu();
+contextMenu();
 
 function newFolder() {
   document
@@ -349,7 +349,7 @@ function finderApplication() {
   const searchIcon = finderApp.querySelector(".search-icon");
 
   let isBig = false;
-  let isVisible = true;
+  let isVisible = false;
   let isMinimized = false;
 
   function finderResize() {
@@ -390,11 +390,11 @@ function finderApplication() {
 
   function toggleFinder() {
     if (isMinimized || !isVisible) {
-      finderApp.style.display = "flex";
+      finderApp.classList.remove("hidden");
       isVisible = true;
       isMinimized = false;
     } else {
-      finderApp.style.display = "none";
+      finderApp.classList.add("hidden");
       isVisible = false;
       isMinimized = true;
     }
@@ -403,7 +403,7 @@ function finderApplication() {
   }
 
   closeBtn.addEventListener("click", () => {
-    finderApp.style.display = "none";
+    finderApp.classList.add("hidden");
     isVisible = false;
     isMinimized = false;
     finderResize(); // Reset to normal size
@@ -424,7 +424,9 @@ function finderApplication() {
 
   // Drag support
   const dragBar = finderApp.querySelector(".right nav");
-  let isDragging = false, offsetX = 0, offsetY = 0;
+  let isDragging = false,
+    offsetX = 0,
+    offsetY = 0;
 
   dragBar.addEventListener("mousedown", (e) => {
     isDragging = true;
@@ -442,9 +444,9 @@ function finderApplication() {
     isDragging = false;
   });
 
-  // Init
-  finderApp.style.display = "flex";
-  isVisible = true;
+  // Don't show on load
+  finderApp.classList.add("hidden");
+  isVisible = false;
   isMinimized = false;
   updateDockState();
 }
@@ -455,7 +457,8 @@ function dock() {
   // Auto show/hide when app is fullscreen only
   document.addEventListener("mousemove", (e) => {
     const app = document.getElementById("0");
-    const isFullscreen = app && app.style.display !== "none" && app.style.height === "100%";
+    const isFullscreen =
+      app && !app.classList.contains("hidden") && app.style.height === "100%";
 
     if (isFullscreen) {
       if (e.clientY > window.innerHeight - 80) {
@@ -516,11 +519,10 @@ function dock() {
   applyDragListeners();
 }
 
-// Ensure dock is visible unless app is fullscreen and visible
 function updateDockState() {
   const dock = document.getElementById("dock");
   const app = document.getElementById("0");
-  const isVisible = app.style.display !== "none";
+  const isVisible = !app.classList.contains("hidden");
   const isFullscreen = app.style.height === "100%";
 
   if (!isVisible || !isFullscreen) {
@@ -532,7 +534,8 @@ function updateDockState() {
   }
 }
 
-// Initialize
-finderApplication();
-dock();
-
+// Run when DOM is fully loaded
+document.addEventListener("DOMContentLoaded", () => {
+  finderApplication();
+  dock();
+});
