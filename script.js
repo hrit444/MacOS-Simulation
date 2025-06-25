@@ -1,7 +1,3 @@
-// document.addEventListener("contextmenu", function (e) {
-//   e.preventDefault();
-// });
-
 function displayContolOpener() {
   let brightness = document.querySelector("#brightness");
   let displayContainer = document.querySelector(".display-container");
@@ -152,88 +148,6 @@ adIcon.addEventListener("click", () => {
   adStatus.textContent = adOff ? "Off" : "On";
 });
 
-function dockHovering() {
-  const hov = document.querySelectorAll(".hov");
-
-  hov.forEach((elem) => {
-    const rect = elem.getBoundingClientRect();
-    elem.addEventListener("mouseenter", function () {
-      elem.style.left = rect.left;
-    });
-
-    elem.addEventListener("mouseleave", function () {
-      elem.style.left = rect.left;
-    });
-  });
-}
-dockHovering();
-
-function finderApplication() {
-  let finderApp = document.querySelector("#finder-app");
-  let dock = document.querySelector(".dock");
-
-  function finderResize() {
-    finderApp.style.height = "66%";
-    finderApp.style.width = "50%";
-    finderApp.style.top = "20%";
-    finderApp.style.left = "10%";
-    finderApp.style.borderRadius = "1vw";
-    document.querySelector("#finder-app .left").style.width = "23%";
-    document.querySelector("#finder-app .right").style.width = "77%";
-    document.querySelector("#finder-app .right .search-list").style.display =
-      "none";
-    document.querySelector("#finder-app .search-icon").style.display = "block";
-    document.querySelector("#finder-app .sBorder").style.display = "none";
-    // document.querySelector("#finder-app .search-icon").style.display = "block";
-    dock.style.display = "flex";
-  }
-
-  finderApp.style.display = "none";
-  let close = document.querySelector("#close");
-  close.addEventListener("click", () => {
-    finderApp.style.display = "none";
-    finderResize();
-  });
-
-  let resize = document.querySelector("#resize");
-  isBig = false;
-  resize.addEventListener("click", () => {
-    if (!isBig) {
-      finderApp.style.height = "100%";
-      finderApp.style.width = "100%";
-      finderApp.style.top = "0";
-      finderApp.style.left = "0";
-      finderApp.style.borderRadius = "0";
-      dock.style.display = "none";
-      document.querySelector("#finder-app .left").style.width = "13%";
-      document.querySelector("#finder-app .right").style.width = "87%";
-      document.querySelector("#finder-app .right .search-list").style.display =
-        "block";
-      document.querySelector("#finder-app .sBorder").style.display = "flex";
-      document.querySelector("#finder-app .search-icon").style.display = "none";
-    } else {
-      finderResize();
-    }
-
-    isBig = !isBig;
-  });
-
-  let finder = document.querySelector("#finder");
-  let finderCount = false;
-  function minimizeFnc() {
-    finderApp.style.display = finderCount ? "flex" : "none";
-    finderCount = !finderCount;
-  }
-  finder.addEventListener("click", () => {
-    minimizeFnc();
-  });
-  document.querySelector("#minimise").addEventListener("click", () => {
-    minimizeFnc();
-  });
-}
-
-finderApplication();
-
 function contextMenu() {
   let rClkWindow = document.querySelector(".right-click-window");
 
@@ -262,15 +176,12 @@ function contextMenu() {
   });
 
   // Prevent menu from closing when clicking inside it
-  rClkWindow.addEventListener("click", (e) => {
-    e.stopPropagation();
-  });
+  // rClkWindow.addEventListener("click", (e) => {
+  //   e.stopPropagation();
+  // });
 }
 
-contextMenu();
-
-
-//new folder creation, rename, drag
+// contextMenu();
 
 function newFolder() {
   document
@@ -361,7 +272,6 @@ function newFolder() {
 
 newFolder();
 
-
 function brightnessSeeker() {
   const brightnessSlider = document.querySelector(
     ".control-center .brightness input"
@@ -402,12 +312,10 @@ function brightnessSeeker() {
   });
 }
 
-brightnessSeeker()
+brightnessSeeker();
 
 function soundSeeker() {
-  const soundSlider = document.querySelector(
-    ".control-center .sound input"
-  );
+  const soundSlider = document.querySelector(".control-center .sound input");
   const soundProgressBar = document.querySelector(
     ".control-center .sound progress"
   );
@@ -416,4 +324,215 @@ function soundSeeker() {
   });
 }
 
-soundSeeker()
+soundSeeker();
+
+function changeWallpaper() {
+  const controller = document.querySelector(".brightness-controller");
+
+  document.querySelector("#change-wallpaper").addEventListener("click", () => {
+    const imageUrl = `https://picsum.photos/1920/1080?3D`;
+
+    controller.style.backgroundImage = `url("${imageUrl}")`;
+  });
+}
+
+changeWallpaper();
+
+function finderApplication() {
+  const finderApp = document.getElementById("0");
+  const dock = document.getElementById("dock");
+  const closeBtn = document.getElementById("close");
+  const minimiseBtn = document.getElementById("minimise");
+  const resizeBtn = document.getElementById("resize");
+  const searchBar = finderApp.querySelector(".search-list");
+  const searchBorder = finderApp.querySelector(".sBorder");
+  const searchIcon = finderApp.querySelector(".search-icon");
+
+  let isBig = false;
+  let isVisible = true;
+  let isMinimized = false;
+
+  function finderResize() {
+    finderApp.style.height = "66%";
+    finderApp.style.width = "50%";
+    finderApp.style.top = "20%";
+    finderApp.style.left = "10%";
+    finderApp.style.borderRadius = "1vw";
+    finderApp.querySelector(".left").style.width = "23%";
+    finderApp.querySelector(".right").style.width = "77%";
+    searchBar.style.display = "none";
+    searchBorder.style.display = "none";
+    searchIcon.style.display = "block";
+    dock.style.opacity = "1";
+    dock.style.pointerEvents = "auto";
+  }
+
+  resizeBtn.addEventListener("click", () => {
+    if (!isBig) {
+      // Maximize
+      finderApp.style.height = "100%";
+      finderApp.style.width = "100%";
+      finderApp.style.top = "0";
+      finderApp.style.left = "0";
+      finderApp.style.borderRadius = "0";
+      finderApp.querySelector(".left").style.width = "13%";
+      finderApp.querySelector(".right").style.width = "87%";
+      searchBar.style.display = "block";
+      searchBorder.style.display = "flex";
+      searchIcon.style.display = "none";
+    } else {
+      finderResize();
+    }
+    isBig = !isBig;
+    isMinimized = false;
+    updateDockState();
+  });
+
+  function toggleFinder() {
+    if (isMinimized || !isVisible) {
+      finderApp.style.display = "flex";
+      isVisible = true;
+      isMinimized = false;
+    } else {
+      finderApp.style.display = "none";
+      isVisible = false;
+      isMinimized = true;
+    }
+
+    updateDockState();
+  }
+
+  closeBtn.addEventListener("click", () => {
+    finderApp.style.display = "none";
+    isVisible = false;
+    isMinimized = false;
+    finderResize(); // Reset to normal size
+    isBig = false;
+    updateDockState();
+  });
+
+  minimiseBtn.addEventListener("click", () => {
+    toggleFinder();
+  });
+
+  const finderDockIcon = document.getElementById("finder");
+  if (finderDockIcon) {
+    finderDockIcon.addEventListener("click", () => {
+      toggleFinder();
+    });
+  }
+
+  // Drag support
+  const dragBar = finderApp.querySelector(".right nav");
+  let isDragging = false, offsetX = 0, offsetY = 0;
+
+  dragBar.addEventListener("mousedown", (e) => {
+    isDragging = true;
+    offsetX = e.clientX - finderApp.offsetLeft;
+    offsetY = e.clientY - finderApp.offsetTop;
+  });
+
+  document.addEventListener("mousemove", (e) => {
+    if (!isDragging) return;
+    finderApp.style.left = `${e.clientX - offsetX}px`;
+    finderApp.style.top = `${e.clientY - offsetY}px`;
+  });
+
+  document.addEventListener("mouseup", () => {
+    isDragging = false;
+  });
+
+  // Init
+  finderApp.style.display = "flex";
+  isVisible = true;
+  isMinimized = false;
+  updateDockState();
+}
+
+function dock() {
+  const dock = document.getElementById("dock");
+
+  // Auto show/hide when app is fullscreen only
+  document.addEventListener("mousemove", (e) => {
+    const app = document.getElementById("0");
+    const isFullscreen = app && app.style.display !== "none" && app.style.height === "100%";
+
+    if (isFullscreen) {
+      if (e.clientY > window.innerHeight - 80) {
+        dock.style.opacity = "1";
+        dock.style.pointerEvents = "auto";
+      } else {
+        dock.style.opacity = "0";
+        dock.style.pointerEvents = "none";
+      }
+    }
+  });
+
+  // Bounce animation
+  function applyBounceListeners() {
+    document.querySelectorAll(".dock-icon").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        btn.classList.add("animate-bounce");
+        setTimeout(() => btn.classList.remove("animate-bounce"), 700);
+      });
+    });
+  }
+
+  // Drag and drop
+  function applyDragListeners() {
+    let dragSrcEl = null;
+
+    function handleDragStart(e) {
+      dragSrcEl = this;
+      e.dataTransfer.effectAllowed = "move";
+      e.dataTransfer.setData("text/html", this.innerHTML);
+    }
+
+    function handleDragOver(e) {
+      e.preventDefault();
+      return false;
+    }
+
+    function handleDrop(e) {
+      e.stopPropagation();
+      if (dragSrcEl !== this) {
+        dragSrcEl.innerHTML = this.innerHTML;
+        this.innerHTML = e.dataTransfer.getData("text/html");
+        applyBounceListeners();
+        applyDragListeners();
+      }
+      return false;
+    }
+
+    document.querySelectorAll(".dock-icon").forEach((btn) => {
+      btn.setAttribute("draggable", true);
+      btn.addEventListener("dragstart", handleDragStart);
+      btn.addEventListener("dragover", handleDragOver);
+      btn.addEventListener("drop", handleDrop);
+    });
+  }
+
+  applyBounceListeners();
+  applyDragListeners();
+}
+
+// Ensure dock is visible unless app is fullscreen and visible
+function updateDockState() {
+  const dock = document.getElementById("dock");
+  const app = document.getElementById("0");
+  const isVisible = app.style.display !== "none";
+  const isFullscreen = app.style.height === "100%";
+
+  if (!isVisible || !isFullscreen) {
+    dock.style.opacity = "1";
+    dock.style.pointerEvents = "auto";
+  } else {
+    dock.style.opacity = "0";
+    dock.style.pointerEvents = "none";
+  }
+}
+
+// Initialize
+finderApplication();
+dock();
+
