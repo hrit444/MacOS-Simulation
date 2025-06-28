@@ -327,13 +327,25 @@ function soundSeeker() {
 soundSeeker();
 
 function changeWallpaper() {
+
+  let wallDiv = document.querySelector(".wallpaper-changer")
+  let wallClose = document.querySelector(".wallpaper-changer nav button")
+  
+  document.querySelector("#change-wallpaper").addEventListener("click", ()=>{
+    wallDiv.style.display = "flex"
+  })
+
+  wallClose.addEventListener("click", ()=>{
+    wallDiv.style.display = "none"
+  })
+
   const controller = document.querySelector(".brightness-controller");
-
-  document.querySelector("#change-wallpaper").addEventListener("click", () => {
-    const imageUrl = `https://picsum.photos/1920/1080?3D`;
-
-    controller.style.backgroundImage = `url("${imageUrl}")`;
-  });
+  let imgs = document.querySelectorAll(".workarea img")
+  imgs.forEach((img)=>{
+    img.addEventListener("click",()=>{
+      controller.style.backgroundImage = `url(${img.getAttribute("src")})`;
+    })
+  })
 }
 
 changeWallpaper();

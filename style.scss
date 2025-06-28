@@ -208,6 +208,7 @@ nav {
     }
   }
 }
+
 .sound {
   input {
     -webkit-appearance: none;
@@ -235,5 +236,12 @@ nav {
       border-radius: 10px;
       height: 100%;
     }
+  }
+}
+
+.workarea{
+  img{
+    height: 9vw;
+    width: 14vw;
   }
 }
