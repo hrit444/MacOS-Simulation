@@ -9,6 +9,10 @@ body {
   width: 100%;
 }
 
+body {
+  overflow: hidden;
+}
+
 .brightness-controller {
   background-image: url("https://images.unsplash.com/photo-1687248408868-761bfe297b81?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
   background-position: center;
@@ -110,13 +114,22 @@ nav .r-nav img {
   background-color: #797979;
 }
 
-.finder-app .right .navigation i {
+.trash-app, .finder-app {
+  background-color: rgba(28, 28, 28, 0.9568627451);
+}
+.trash-app .left, .finder-app .left {
+  background-color: rgba(70, 70, 74, 0.4549019608);
+}
+.trash-app .right .navigation i, .finder-app .right .navigation i {
   font-size: 1.3vw;
   color: #a6a6a6;
 }
-.finder-app .right .navigation #filename {
+.trash-app .right .navigation #filename, .finder-app .right .navigation #filename {
   font-size: 1vw;
   font-weight: 500;
+}
+.trash-app .right .display, .finder-app .right .display {
+  background-color: #1c1c1c;
 }
 
 .hov {
@@ -194,4 +207,40 @@ nav .r-nav img {
 .workarea img {
   height: 9vw;
   width: 14vw;
+}
+
+.code-app i {
+  color: #7c8590;
+  font-size: 1.2vw;
+}
+.code-app .c-search {
+  color: #7c8590;
+}
+.code-app .c-search i {
+  font-size: 0.9vw;
+  transform: scaleX(-1);
+}
+.code-app .c-search h5 {
+  font-size: 0.8vw;
+  font-weight: 300;
+}
+.code-app .c-lnav img {
+  height: 1.7vw;
+  opacity: 0.7;
+}
+.code-app .c-lnav img:hover {
+  opacity: 1;
+}
+.code-app .c-down-nav {
+  color: #7c8590;
+}
+.code-app .c-down-nav img {
+  height: 1vw;
+  opacity: 0.7;
+}
+.code-app .c-down-nav h6 {
+  font-size: 0.89vw;
+}
+.code-app .c-down-nav #live {
+  height: 1.1vw;
 }/*# sourceMappingURL=style.css.map */

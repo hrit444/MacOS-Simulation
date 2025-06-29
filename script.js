@@ -184,11 +184,21 @@ function contextMenu() {
 contextMenu();
 
 function newFolder() {
-  document
-    .querySelector("#new-folder")
-    .addEventListener("click", () => createNewFolder());
+  const newFolderBtn = document.querySelector("#new-folder");
+  if (newFolderBtn) {
+    newFolderBtn.addEventListener("click", createNewFolder);
+  }
 
   let folderCount = 1;
+  const createdFolders = [];
+
+  // Folder size and spacing
+  const folderWidth = 80;
+  const folderHeight = 100;
+  const margin = 20;
+  const desktopPadding = 20; // prevent touching edges
+
+  let zIndexCounter = 1000;
 
   document.addEventListener("keydown", (e) => {
     if (e.shiftKey && e.key === "N") {
@@ -201,73 +211,74 @@ function newFolder() {
     const folder = document.createElement("div");
     folder.className =
       "folder absolute flex flex-col justify-center items-center h-20 w-16 cursor-grab";
-    folder.style.top = `${Math.random() * 70 + 10}vh`;
-    folder.style.left = `${Math.random() * 80 + 10}vw`;
+    folder.style.zIndex = zIndexCounter++;
 
     const name = `Untitled folder ${folderCount++}`;
 
     folder.innerHTML = `
-    <img class="w-3/4 h-3/4" src="/folder.png" alt="">
-    <input
-      type="text"
-      class="text-white text-[.8vw] font-medium text-center placeholder:text-[.8vw] outline-none bg-transparent"
-      placeholder="${name}"
-      value="${name}"
-    />
-  `;
+      <img class="w-3/4 h-3/4" src="/folder.png" alt="" draggable="false">
+      <input
+        type="text"
+        class="text-white text-[.8vw] font-medium text-center placeholder:text-[.8vw] outline-none bg-transparent"
+        placeholder="${name}"
+        value="${name}"
+        readonly
+      />
+    `;
 
     document.body.appendChild(folder);
+    createdFolders.push(folder);
 
     const input = folder.querySelector("input");
 
-    // Start readonly
-    input.setAttribute("readonly", true);
-
-    // Rename on double-click
     input.addEventListener("dblclick", () => {
       input.removeAttribute("readonly");
       input.focus();
       input.select();
     });
 
-    // Finalize rename on Enter
     input.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
         e.preventDefault();
-        input.blur();
-        input.setAttribute("readonly", true);
-      }
-    });
-
-    //Rename on enter
-    input.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
         input.setAttribute("readonly", true);
         input.blur();
       }
     });
 
-    // Drag & drop functionality
+    const img = folder.querySelector("img");
+
+    const bringToFront = () => {
+      folder.style.zIndex = zIndexCounter++;
+    };
+    img.addEventListener("mousedown", bringToFront);
     folder.addEventListener("mousedown", (e) => {
-      if (e.target.tagName === "INPUT") return;
+      if (e.target.tagName !== "INPUT") bringToFront();
+    });
 
-      const shiftX = e.clientX - folder.getBoundingClientRect().left;
-      const shiftY = e.clientY - folder.getBoundingClientRect().top;
+    dragSupport(img, folder);
+    dragSupport(folder, folder);
 
-      function onMouseMove(e) {
-        folder.style.left = `${e.clientX - shiftX}px`;
-        folder.style.top = `${e.clientY - shiftY}px`;
-      }
+    repositionFolders(); // Align folders
+  }
 
-      function onMouseUp() {
-        document.removeEventListener("mousemove", onMouseMove);
-        document.removeEventListener("mouseup", onMouseUp);
-      }
+  function repositionFolders() {
+    const screenHeight = window.innerHeight - desktopPadding * 2;
+    const screenWidth = window.innerWidth - desktopPadding * 2;
+    const maxPerColumn = Math.floor(screenHeight / (folderHeight + margin));
 
-      document.addEventListener("mousemove", onMouseMove);
-      document.addEventListener("mouseup", onMouseUp);
+    createdFolders.forEach((folder, index) => {
+      const row = index % maxPerColumn;
+      const col = Math.floor(index / maxPerColumn);
+
+      const top = row * (folderHeight + margin) + desktopPadding;
+      const left = col * (folderWidth + margin) + desktopPadding;
+
+      folder.style.top = `${top}px`;
+      folder.style.left = `${left}px`;
     });
   }
+
+  window.addEventListener("resize", repositionFolders);
 }
 
 newFolder();
@@ -327,35 +338,102 @@ function soundSeeker() {
 soundSeeker();
 
 function changeWallpaper() {
+  let wallDiv = document.querySelector(".wallpaper-changer");
+  let wallClose = document.querySelector(".wallpaper-changer nav button");
+  let wallDrag = document.querySelector(".wallpaper-changer nav");
 
-  let wallDiv = document.querySelector(".wallpaper-changer")
-  let wallClose = document.querySelector(".wallpaper-changer nav button")
-  
-  document.querySelector("#change-wallpaper").addEventListener("click", ()=>{
-    wallDiv.style.display = "flex"
-  })
+  dragSupport(wallDrag, wallDiv);
 
-  wallClose.addEventListener("click", ()=>{
-    wallDiv.style.display = "none"
-  })
+  document.querySelector("#change-wallpaper").addEventListener("click", () => {
+    wallDiv.style.display = "flex";
+  });
+
+  wallClose.addEventListener("click", () => {
+    wallDiv.style.display = "none";
+  });
 
   const controller = document.querySelector(".brightness-controller");
-  let imgs = document.querySelectorAll(".workarea img")
-  imgs.forEach((img)=>{
-    img.addEventListener("click",()=>{
+  let imgs = document.querySelectorAll(".workarea img");
+  imgs.forEach((img) => {
+    img.addEventListener("click", () => {
+      imgs.forEach((i) => {
+        i.style.border = "none";
+        i.style.filter = "blur(0)";
+      });
+      img.style.border = "1px solid blue";
+      img.style.filter = "blur(2%)";
       controller.style.backgroundImage = `url(${img.getAttribute("src")})`;
-    })
-  })
+    });
+  });
 }
 
 changeWallpaper();
 
+function dragSupport(dragElem, dragApp) {
+  let isDragging = false,
+    offsetX = 0,
+    offsetY = 0;
+
+  dragElem.addEventListener("mousedown", (e) => {
+    // Disable dragging if app is fullscreen
+    if (
+      dragApp.style.height === "100%" ||
+      dragApp.classList.contains("fullscreen")
+    ) {
+      return;
+    }
+
+    isDragging = true;
+    offsetX = e.clientX - dragApp.offsetLeft;
+    offsetY = e.clientY - dragApp.offsetTop;
+  });
+
+  document.addEventListener("mousemove", (e) => {
+    if (!isDragging) return;
+
+    // Also stop dragging if app was maximized during drag
+    if (
+      dragApp.style.height === "100%" ||
+      dragApp.classList.contains("fullscreen")
+    ) {
+      isDragging = false;
+      return;
+    }
+
+    dragApp.style.left = `${e.clientX - offsetX}px`;
+    dragApp.style.top = `${e.clientY - offsetY}px`;
+  });
+
+  document.addEventListener("mouseup", () => {
+    isDragging = false;
+  });
+}
+
+
+function appBigger(app) {
+  app.style.height = "100%";
+  app.style.width = "100%";
+  app.style.top = "0";
+  app.style.left = "0";
+  app.style.borderRadius = "0";
+  app.classList.add("fullscreen");
+}
+
+function appResize(app) {
+  app.style.height = "66%";
+  app.style.width = "50%";
+  app.style.top = "20%";
+  app.style.left = "10%";
+  app.style.borderRadius = "1vw";
+  app.classList.remove("fullscreen");
+}
+
 function finderApplication() {
   const finderApp = document.getElementById("0");
   const dock = document.getElementById("dock");
-  const closeBtn = document.getElementById("close");
-  const minimiseBtn = document.getElementById("minimise");
-  const resizeBtn = document.getElementById("resize");
+  const closeBtn = finderApp.querySelector("#close");
+  const minimiseBtn = finderApp.querySelector("#minimise");
+  const resizeBtn = finderApp.querySelector("#resize");
   const searchBar = finderApp.querySelector(".search-list");
   const searchBorder = finderApp.querySelector(".sBorder");
   const searchIcon = finderApp.querySelector(".search-icon");
@@ -365,11 +443,7 @@ function finderApplication() {
   let isMinimized = false;
 
   function finderResize() {
-    finderApp.style.height = "66%";
-    finderApp.style.width = "50%";
-    finderApp.style.top = "20%";
-    finderApp.style.left = "10%";
-    finderApp.style.borderRadius = "1vw";
+    appResize(finderApp);
     finderApp.querySelector(".left").style.width = "23%";
     finderApp.querySelector(".right").style.width = "77%";
     searchBar.style.display = "none";
@@ -381,12 +455,7 @@ function finderApplication() {
 
   resizeBtn.addEventListener("click", () => {
     if (!isBig) {
-      // Maximize
-      finderApp.style.height = "100%";
-      finderApp.style.width = "100%";
-      finderApp.style.top = "0";
-      finderApp.style.left = "0";
-      finderApp.style.borderRadius = "0";
+      appBigger(finderApp);
       finderApp.querySelector(".left").style.width = "13%";
       finderApp.querySelector(".right").style.width = "87%";
       searchBar.style.display = "block";
@@ -435,26 +504,11 @@ function finderApplication() {
   }
 
   // Drag support
-  const dragBar = finderApp.querySelector(".right nav");
-  let isDragging = false,
-    offsetX = 0,
-    offsetY = 0;
+  const dragBar1 = finderApp.querySelector(".right nav");
+  const dragBar2 = finderApp.querySelector(".left nav");
 
-  dragBar.addEventListener("mousedown", (e) => {
-    isDragging = true;
-    offsetX = e.clientX - finderApp.offsetLeft;
-    offsetY = e.clientY - finderApp.offsetTop;
-  });
-
-  document.addEventListener("mousemove", (e) => {
-    if (!isDragging) return;
-    finderApp.style.left = `${e.clientX - offsetX}px`;
-    finderApp.style.top = `${e.clientY - offsetY}px`;
-  });
-
-  document.addEventListener("mouseup", () => {
-    isDragging = false;
-  });
+  dragSupport(dragBar1, finderApp);
+  dragSupport(dragBar2, finderApp);
 
   // Don't show on load
   finderApp.classList.add("hidden");
@@ -466,13 +520,17 @@ function finderApplication() {
 function dock() {
   const dock = document.getElementById("dock");
 
-  // Auto show/hide when app is fullscreen only
+  // Auto show/hide when ANY app is fullscreen
   document.addEventListener("mousemove", (e) => {
-    const app = document.getElementById("0");
-    const isFullscreen =
-      app && !app.classList.contains("hidden") && app.style.height === "100%";
+    const allApps = document.querySelectorAll("[data-app]");
 
-    if (isFullscreen) {
+    const isAnyFullscreen = Array.from(allApps).some(
+      (app) =>
+        !app.classList.contains("hidden") &&
+        (app.style.height === "100%" || app.classList.contains("fullscreen"))
+    );
+
+    if (isAnyFullscreen) {
       if (e.clientY > window.innerHeight - 80) {
         dock.style.opacity = "1";
         dock.style.pointerEvents = "auto";
@@ -480,6 +538,9 @@ function dock() {
         dock.style.opacity = "0";
         dock.style.pointerEvents = "none";
       }
+    } else {
+      dock.style.opacity = "1";
+      dock.style.pointerEvents = "auto";
     }
   });
 
@@ -493,7 +554,7 @@ function dock() {
     });
   }
 
-  // Drag and drop
+  // Drag and drop reorder
   function applyDragListeners() {
     let dragSrcEl = null;
 
@@ -546,8 +607,146 @@ function updateDockState() {
   }
 }
 
-// Run when DOM is fully loaded
 document.addEventListener("DOMContentLoaded", () => {
   finderApplication();
+  codeApplication();
+  trashApplication()
   dock();
 });
+
+function codeApplication() {
+  const codeApp = document.getElementById("1");
+  const closeBtn = codeApp.querySelector("#close");
+  const minimiseBtn = codeApp.querySelector("#minimise");
+  const resizeBtn = codeApp.querySelector("#resize");
+  const dragBar = codeApp.querySelector(".c-up-nav");
+
+  let isBig = 0;
+  let isVisible = 0;
+
+  document.querySelector("#code").addEventListener("click", () => {
+    if (!isVisible) {
+      codeApp.classList.remove("hidden");
+      appResize(codeApp);
+      isVisible = 1
+    } else {
+      codeApp.classList.add("hidden");
+      isVisible = 0
+    }
+    // isVisible = ;
+  });
+
+  closeBtn.addEventListener("click", () => {
+    codeApp.classList.add("hidden");
+    appResize(codeApp);
+    isBig = 0;
+    isVisible = 0;
+  });
+
+  minimiseBtn.addEventListener("click", ()=>{
+    codeApp.classList.add("hidden");
+    isVisible = 0;
+  })
+
+  resizeBtn.addEventListener("click", () => {
+    if (!isBig) {
+      appBigger(codeApp);
+      isBig = 1;
+    } else {
+      appResize(codeApp);
+      isBig = 0;
+    }
+  });
+
+  dragSupport(dragBar, codeApp)
+}
+
+function trashApplication() {
+  const trashApp = document.getElementById("11");
+  const dock = document.getElementById("dock");
+  const closeBtn = trashApp.querySelector("#close");
+  const minimiseBtn = trashApp.querySelector("#minimise");
+  const resizeBtn = trashApp.querySelector("#resize");
+  const searchBar = trashApp.querySelector(".search-list");
+  const searchBorder = trashApp.querySelector(".sBorder");
+  const searchIcon = trashApp.querySelector(".search-icon");
+
+  let isBig = false;
+  let isVisible = false;
+  let isMinimized = false;
+
+  function finderResize() {
+    appResize(trashApp);
+    trashApp.querySelector(".left").style.width = "23%";
+    trashApp.querySelector(".right").style.width = "77%";
+    searchBar.style.display = "none";
+    searchBorder.style.display = "none";
+    searchIcon.style.display = "block";
+    dock.style.opacity = "1";
+    dock.style.pointerEvents = "auto";
+  }
+
+  resizeBtn.addEventListener("click", () => {
+    if (!isBig) {
+      appBigger(trashApp);
+      trashApp.querySelector(".left").style.width = "13%";
+      trashApp.querySelector(".right").style.width = "87%";
+      searchBar.style.display = "block";
+      searchBorder.style.display = "flex";
+      searchIcon.style.display = "none";
+    } else {
+      finderResize();
+    }
+    isBig = !isBig;
+    isMinimized = false;
+    updateDockState();
+  });
+
+  function toggleFinder() {
+    if (isMinimized || !isVisible) {
+      trashApp.classList.remove("hidden");
+      isVisible = true;
+      isMinimized = false;
+    } else {
+      trashApp.classList.add("hidden");
+      isVisible = false;
+      isMinimized = true;
+    }
+
+    updateDockState();
+  }
+
+  closeBtn.addEventListener("click", () => {
+    trashApp.classList.add("hidden");
+    isVisible = false;
+    isMinimized = false;
+    finderResize(); // Reset to normal size
+    isBig = false;
+    updateDockState();
+  });
+
+  minimiseBtn.addEventListener("click", () => {
+    toggleFinder();
+  });
+
+  const trashDockIcon = document.getElementById("trash");
+  if (trashDockIcon) {
+    trashDockIcon.addEventListener("click", () => {
+      toggleFinder();
+    });
+  }
+
+  // Drag support
+  const dragBar1 = trashApp.querySelector(".right nav");
+  const dragBar2 = trashApp.querySelector(".left nav");
+
+  dragSupport(dragBar1, trashApp);
+  dragSupport(dragBar2, trashApp);
+
+  // Don't show on load
+  trashApp.classList.add("hidden");
+  isVisible = false;
+  isMinimized = false;
+  updateDockState();
+}
+

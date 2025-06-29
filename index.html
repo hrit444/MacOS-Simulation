@@ -283,7 +283,7 @@
 
       <!-- Finder Application -->
       <div
-        id="0"
+        id="0" data-app="finder"
         class="finder-app h-2/3 w-1/2 bg-[#323332] text-white rounded-xl border border-[#515151] absolute top-[20%] left-[10%] overflow-hidden hidden cursor-default absolute flex "
       >
         <div class="left bg-[#46464A] h-full w-[23%] p-2">
@@ -366,21 +366,181 @@
               
             </div>
           </nav>
-          <div class="finder-display h-full w-full p-4"></div>
+          <div class="display h-full w-full p-4"></div>
         </div>
       </div>
 
-      
-
-       <!-- Code Application -->
-        <!-- Brave Application -->
-         <!-- Setting Application -->
-          <!-- Trash Application -->
-           <!-- Terminal Application -->
-            <!-- Calculator Application -->
-             <!-- Notes Application -->
-              <!-- Music player Application -->
-               <!-- Camera Application -->
+      <!-- Code Application -->
+       <div
+        id="1"
+         data-app="code"
+          class="code-app h-2/3 w-1/2 bg-[#0D1116] text-white rounded-xl absolute top-[20%] left-[10%] overflow-hidden hidden cursor-default absolute flex flex-col"
+      >
+          <nav class="c-up-nav h-10 w-full flex justify-between items-center border-b-1 border-[#2E3239]">
+            <div class="navigation flex gap-2 h-full items-center px-3">
+              <div id="close" class="bg-[#FE5F58] h-3 w-3 rounded-full"></div>
+              <div id="minimise" class="bg-[#FEBC2E] h-3 w-3 rounded-full"></div>
+              <div id="resize" class="bg-[#28C840] h-3 w-3 rounded-full"></div>
+            </div>
+            <div class="center h-full w-full flex items-center justify-center gap-2">
+              <i class="ri-arrow-left-line"></i>
+              <i class="ri-arrow-right-line"></i>
+              <div class="c-search border bg-[#191D23] w-60 flex gap-1 justify-center ml-2 items-center border-[#2E3239] rounded-sm cursor-pointer hover:bg-[#1E2228]">
+                <i class="ri-search-line"></i>
+                <h5 class="font-normal my-[.2vw]">Search</h5>
+              </div>
+              <i class="ri-copilot-fill hover:bg-[#1E2228] px-1"></i>
+            </div>
+            <div class="layout h-full flex items-center justify-center px-3 gap-1">
+              <i class="ri-layout-2-line hover:bg-[#1E2228] px-1"></i>
+              <i class="ri-layout-left-line hover:bg-[#1E2228] px-1"></i>
+              <i class="ri-layout-bottom-line hover:bg-[#1E2228] px-1"></i>
+              <i class="ri-layout-right-line hover:bg-[#1E2228] px-1"></i>
+            </div>
+          </nav>
+          <div class="c-work w-full h-full">
+            <div class="c-lnav h-full w-12 border-r-1 border-[#2E3239] flex flex-col justify-between py-4">
+              <div class="c-top flex flex-col gap-4">
+                <img src="./code icons/files.svg" alt="files">
+                <img src="./code icons/search.svg" alt="search">
+                <img src="./code icons/source-control.svg" alt="source-control">
+                <img src="./code icons/debug.svg" alt="debug">
+                <img src="./code icons/extensions.svg" alt="extensions">
+              </div>
+              <div class="c-bottom flex flex-col gap-4">
+                <img src="./code icons/account.svg" alt="">
+                <img src="./code icons/settings-gear.svg" alt="">
+              </div>
+            </div>
+          </div>
+          <nav class="c-down-nav h-6 w-full flex justify-between items-center border-t-1 border-[#2E3239]">
+            <div class="c-bNav-left flex h-full items-center justify-center gap-1">
+              <div class="h-full w-9 bg-[#30363D] flex items-center justify-center ">
+                <img src="./code icons/remote.svg" alt="">
+              </div>
+              <div class="h-full px-2 flex items-center justify-center hover:bg-[#1E2228] gap-1">
+                <img src="./code icons/rocket.svg" alt="">
+                <h6>Launchpad</h6>
+              </div>
+              <div class="h-full px-2 flex justify-center items-center ml-1 hover:bg-[#1E2228] gap-1">
+                <img src="./code icons/error.svg" alt="">
+                <h6>0</h6>
+                <img src="./code icons/warning.svg" alt="">
+                <h6>0</h6>
+              </div>
+            </div>
+            
+            <div class="c-bNav-right flex h-full items-center justify-center gap-2 px-3">
+              <img class="px-1" src="./code icons/git-commit.svg" alt="">
+              <i class="ri-copilot-fill hover:bg-[#1E2228] px-1"></i>
+              <div class="flex h-full items-center justify-center gap-1 px-2 hover:bg-[#1E2228]">
+                <img id="live" src="./code icons/live.png" alt="">
+                <h6>Go Live</h6>
+              </div>
+              <img class="px-1 hover:bg-[#1E2228]" src="./code icons/bell.svg" alt="">
+            </div>
+          </nav>
+       </div>
+      <!-- Brave Application -->
+      <!-- Setting Application -->
+      <!-- Trash Application -->
+       <div
+        id="11" data-app="trash"
+        class="trash-app h-2/3 w-1/2 text-white rounded-xl border border-[#515151] absolute top-[20%] left-[10%] overflow-hidden  cursor-default hidden flex "
+      >
+        <div class="left bg-[#46464A] h-full w-[23%] p-2">
+          <nav class="navigation flex gap-2 h-10 pb-2 items-center pl-3">
+            <div id="close" class="bg-[#FE5F58] h-3 w-3 rounded-full"></div>
+            <div id="minimise" class="bg-[#FEBC2E] h-3 w-3 rounded-full"></div>
+            <div id="resize" class="bg-[#28C840] h-3 w-3 rounded-full"></div>
+          </nav>
+          <div class="dSec h-full w-full overflow-y-scroll">
+            <div class="favorites">
+              <h5 class="text-xs text-[#737573] px-[5px]">Favorites</h5>
+              <div class="recent common-sec">
+                <img src="recentFolder.png" alt="" />
+                <h4>Recent</h4>
+              </div>
+              <div class="project common-sec">
+                <i class="ri-folder-2-line"></i>
+                <h4>Project</h4>
+              </div>
+              <div class="downloads common-sec">
+                <img src="./downloadFolder.png" alt="" />
+                <h4>Downloads</h4>
+              </div>
+              <div class="iammac common-sec">
+                <i class="ri-home-4-line"></i>
+                <h4>iammac</h4>
+              </div>
+              <div class="developer common-sec">
+                <i class="ri-hammer-line rotate-40"></i>
+                <h4>Developer</h4>
+              </div>
+              <div class="desktop common-sec">
+                <img id="desk" src="./desktopFolder.png" alt="" />
+                <h4>Desktop</h4>
+              </div>
+              <div class="library common-sec">
+                <i class="ri-bank-fill pr-[2px]"></i>
+                <h4>Library</h4>
+              </div>
+            </div>
+            <div class="icloud">
+              <h5 class="text-xs text-[#737573] px-[5px]">icloud</h5>
+            </div>
+            <div class="locations">
+              <h5 class="text-xs text-[#737573] px-[5px]">Locations</h5>
+            </div>
+            <div class="tags">
+              <h5 class="text-xs text-[#737573] px-[5px]">Tags</h5>
+            </div>
+          </div>
+        </div>
+        <div class="right h-full w-[77%] flex flex-col">
+          <nav class="flex h-10 w-full bg-[#3B3B3B] flex p-4  py-5.5 items-center justify-between">
+            <div class="navigation h-full flex items-center gap-2">
+              <i class="ri-arrow-left-wide-fill"></i>
+              <i class="ri-arrow-right-wide-fill opacity-90"></i>
+              <h4 id="filename">Trash</h4>
+            </div>
+            <div class="left h-full flex items-center gap-1">
+              <div class="show flex items-center p-2 mr-3">
+                <img
+                  class="h-[25px] rounded-md hover:bg-[#4C4D4C] p-1"
+                  src="./finder-nav-icon/show-icon.png"
+                  alt=""
+                />
+              </div>
+              <img class="h-[18px]" src="finder-nav-icon/upload.png" alt="" />
+              <img class="h-[28px] p-1" src="finder-nav-icon/tag.png" alt="" />
+              <img
+                class="h-[25px] rounded-md hover:bg-[#4C4D4C] p-1"
+                src="finder-nav-icon/others.png"
+                alt=""
+              />
+              <i class="ri-search-line search-icon text-[#8F908F] ml-6"></i>
+              <div class="sBorder hidden border flex gap-3 items-center ml-6 px-1.5 border-[#515151] rounded-sm">
+                <i class="ri-search-line text-[#8F908F] "></i>
+                <input class="search-list hidden outline-none placeholder:text-base font-light" type="text" placeholder="search">
+                </input>
+              </div>
+              
+            </div>
+          </nav>
+          <div class="display h-full w-full">
+            <div class="flex w-full h-7 items-center justify-between border-b-1 border-[#4B4544] px-2">
+              <h6 class="text-[.8vw] text-[#A59F9E]">Trash</h6>
+              <button class="text-[.8vw] text-[#A59F9E] border border-[#A59F9E] rounded-md px-2 opacity-70">Empty</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Terminal Application -->
+      <!-- Calculator Application -->
+      <!-- Notes Application -->
+      <!-- Music player Application -->
+      <!-- Camera Application -->
 
       <!-- Dock area -->
       <div
@@ -408,46 +568,46 @@
             alt="Brave"
           />
         </button>
-        <button draggable="true" class="dock-icon" id="notion">
+        <button draggable="true" class="dock-icon" id="photos">
           <img
             class="rounded-md h-12 hov"
-            src="./doc icon/notion.png"
-            alt="Notion"
+            src="./doc icon/photos.png"
+            alt="photos"
           />
         </button>
-        <button draggable="true" class="dock-icon" id="photoshop">
+        <button draggable="true" class="dock-icon" id="vlc">
           <img
             class="rounded-md h-12 hov"
-            src="./doc icon/photoshop.png"
-            alt="Photoshop"
+            src="./doc icon/vlc.png"
+            alt="vlc"
           />
         </button>
-        <button draggable="true" class="dock-icon" id="illustrator">
+        <button draggable="true" class="dock-icon" id="calculator">
           <img
             class="rounded-md h-12 hov"
-            src="./doc icon/illustrator.png"
-            alt="Illustrator"
+            src="./doc icon/calculator.png"
+            alt="calculator"
           />
         </button>
-        <button draggable="true" class="dock-icon" id="after-effects">
+        <button draggable="true" class="dock-icon" id="camera">
           <img
             class="rounded-md h-12 hov"
-            src="./doc icon/after-effects.png"
-            alt="After Effects"
+            src="./doc icon/camera.png"
+            alt="camera"
           />
         </button>
-        <button draggable="true" class="dock-icon" id="premiere-pro">
+        <button draggable="true" class="dock-icon" id="music">
           <img
             class="rounded-md h-12 hov"
-            src="./doc icon/premiere-pro.png"
-            alt="Premiere Pro"
+            src="./doc icon/music-player.png"
+            alt="music-player"
           />
         </button>
-        <button draggable="true" class="dock-icon" id="davinci">
+        <button draggable="true" class="dock-icon" id="notes">
           <img
             class="rounded-md h-12 hov"
-            src="./doc icon/davinci.png"
-            alt="DaVinci"
+            src="./doc icon/notes.png"
+            alt="notes"
           />
         </button>
         <button draggable="true" class="dock-icon" id="terminal">
